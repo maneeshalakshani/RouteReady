@@ -1,5 +1,5 @@
-import 'package:base_app/routes/routes.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:route_ready/routes/routes.gr.dart';
 
 final _appRouter = AppRouter();
 

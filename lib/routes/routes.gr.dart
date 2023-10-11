@@ -11,37 +11,48 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/material.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:flutter/material.dart' as _i4;
 
+import '../pages/main/main_view.dart' as _i2;
 import '../pages/welcome/welcome_view.dart' as _i1;
 
-class AppRouter extends _i2.RootStackRouter {
-  AppRouter([_i3.GlobalKey<_i3.NavigatorState>? navigatorKey])
+class AppRouter extends _i3.RootStackRouter {
+  AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i2.PageFactory> pagesMap = {
+  final Map<String, _i3.PageFactory> pagesMap = {
     WelcomeRoute.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.WelcomeView(),
       );
-    }
+    },
+    MainRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i2.MainView(),
+      );
+    },
   };
 
   @override
-  List<_i2.RouteConfig> get routes => [
-        _i2.RouteConfig(
+  List<_i3.RouteConfig> get routes => [
+        _i3.RouteConfig(
           WelcomeRoute.name,
           path: '/',
-        )
+        ),
+        _i3.RouteConfig(
+          MainRoute.name,
+          path: '/main-view',
+        ),
       ];
 }
 
 /// generated route for
 /// [_i1.WelcomeView]
-class WelcomeRoute extends _i2.PageRouteInfo<void> {
+class WelcomeRoute extends _i3.PageRouteInfo<void> {
   const WelcomeRoute()
       : super(
           WelcomeRoute.name,
@@ -49,4 +60,16 @@ class WelcomeRoute extends _i2.PageRouteInfo<void> {
         );
 
   static const String name = 'WelcomeRoute';
+}
+
+/// generated route for
+/// [_i2.MainView]
+class MainRoute extends _i3.PageRouteInfo<void> {
+  const MainRoute()
+      : super(
+          MainRoute.name,
+          path: '/main-view',
+        );
+
+  static const String name = 'MainRoute';
 }

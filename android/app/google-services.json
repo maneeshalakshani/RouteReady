@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "794819176768",
+    "project_id": "route-ready-5e7c4",
+    "storage_bucket": "route-ready-5e7c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794819176768:android:6e7a67b9c5f3059dbe72a5",
+        "android_client_info": {
+          "package_name": "com.example.route_ready"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRndRCYSSBPDYdwwHNciVP8m-LbaOzGeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
