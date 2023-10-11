@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:route_ready/pages/main/main_view.dart';
+import 'package:route_ready/pages/scanner_detail/scanner_detail_view.dart';
 import 'package:route_ready/pages/welcome/welcome_view.dart';
 
 /// Need to run the following command
@@ -10,6 +11,7 @@ import 'package:route_ready/pages/welcome/welcome_view.dart';
   routes: [
     MaterialRoute(page: WelcomeView, initial: true),
     MaterialRoute(page: MainView),
+    MaterialRoute(page: ScannerDetailView),
   ],
 )
 class $AppRouter {}

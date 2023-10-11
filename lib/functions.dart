@@ -14,7 +14,7 @@ Future<void> requestCameraPermission() async {
 
 Future<void> checkCameraPermission() async {
   var status = await Permission.camera.status;
-  if (status.isDenied) {
+  if (status.isDenied || status.isLimited || status.isPermanentlyDenied || status.isRestricted) {
     requestCameraPermission();
   }
 }
