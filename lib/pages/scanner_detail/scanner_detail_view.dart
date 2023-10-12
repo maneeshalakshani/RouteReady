@@ -3,14 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
+import 'package:route_ready/pages/main/journey_functions.dart';
+import 'package:route_ready/pages/models/ActiveJourney.dart';
 import 'package:route_ready/pages/scanner_detail/detail_row.dart';
 import 'package:route_ready/routes/routes.gr.dart';
 
 class ScannerDetailView extends HookWidget {
   const ScannerDetailView({
     Key? key, 
+    required this.journeyDta,
+    required this.eLatitude,
+    required this.eLongitude,
+    required this.price,
+    required this.userId,
   }) : super(key: key);
-
+  final ActiveJourneyModel journeyDta;
+  final num eLatitude;
+  final num eLongitude;
+  final num price;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -32,40 +43,42 @@ class ScannerDetailView extends HookWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const DetailContainerRow(
-                label: "Passenger Name",
-                text: "Maneesha Lakshani",
-                marginTop: 80.0,
-              ),
-              const DetailContainerRow(
+              // const DetailContainerRow(
+              //   label: "Passenger Name",
+              //   text: "Maneesha Lakshani",
+              //   marginTop: 80.0,
+              // ),
+              DetailContainerRow(
                 label: "Passenger ID",
-                text: "GDJDO234",
+                text: userId,
               ),
-              const DetailContainerRow(
+              DetailContainerRow(
                 label: "Start Destination",
-                text: "Colombo",
+                text: "Lat: ${journeyDta.latitude}, Lon: ${journeyDta.longitude}",
               ),
-              const DetailContainerRow(
+              DetailContainerRow(
                 label: "End Destination",
-                text: "Galle",
+                text: "Lat: $eLatitude, Lon: $eLongitude",
               ),
-              const DetailContainerRow(
+              DetailContainerRow(
                 label: "Starts At",
-                text: "8:30 AM",
+                text: "${journeyDta.startTime}",
               ),
-              const DetailContainerRow(
+              DetailContainerRow(
                 label: "Ends At",
-                text: "11.30 AM",
+                text: "${DateTime.now()}",
               ),
-              const DetailContainerRow(
+              DetailContainerRow(
                 label: "PRICE",
-                text: "LRK 600",
+                text: price.toString(),
                 textColor: Color.fromARGB(255, 182, 25, 14),
               ),
               RoundButton(
                 btnWidth: width,
                 text: "Complete Journey", 
                 onPressed: (){
+                  addSummaryJourneyData(userId: userId, latitude: eLatitude, longitude: eLongitude, price: price, activeJourney: journeyDta);
+                  deleteActiveJourney(userId: userId);
                   context.router.push(const MainRoute());
                 }
               ),

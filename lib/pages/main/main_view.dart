@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/functions.dart';
-import 'package:route_ready/routes/routes.gr.dart';
+import 'package:route_ready/pages/main/journey_functions.dart';
 
 class MainView extends HookWidget {
   const MainView({
@@ -38,15 +37,24 @@ class MainView extends HookWidget {
                 ),
               ),
               RoundButton(
-                text: "Scan the QR code", 
-                btnWidth: width/2,
+                text: "Scan the QR code for Start", 
+                btnWidth: width/2* 1.5,
                 onPressed: ()async {
-                  // String? cameraScanResult = await scanner.scan();
-                  checkCameraPermission().then((value) async{
+                  requestCameraPermission().then((value) async{
                     String? cameraScanResult = await scanner.scan();
-                    print("RESULT>>> $cameraScanResult");
-                    // context.router.push(const ScannerDetailRoute());
-                    context.router.push(const FineRoute());
+                    qrValidity(qrData: cameraScanResult!, context: context);
+                    // result ? context.router.push(const ScannerDetailRoute()) : context.popRoute();
+                  });
+                },
+              ),
+              RoundButton(
+                text: "Scan the QR code for End", 
+                btnWidth: width/2 * 1.5,
+                onPressed: ()async {
+                  requestCameraPermission().then((value) async{
+                    String? cameraScanResult = await scanner.scan();
+                    qrValidity(qrData: cameraScanResult!, context: context, isEndOfJourney: true);
+                    // result ? context.router.push(const ScannerDetailRoute()) : context.popRoute();
                   });
                 },
               )
