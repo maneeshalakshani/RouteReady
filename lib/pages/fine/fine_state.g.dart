@@ -89,13 +89,13 @@ mixin _$FineStore on _FineStore, Store {
       Atom(name: '_FineStore.totalPrice', context: context);
 
   @override
-  double? get totalPrice {
+  int? get totalPrice {
     _$totalPriceAtom.reportRead();
     return super.totalPrice;
   }
 
   @override
-  set totalPrice(double? value) {
+  set totalPrice(int? value) {
     _$totalPriceAtom.reportWrite(value, super.totalPrice, () {
       super.totalPrice = value;
     });
@@ -160,7 +160,7 @@ mixin _$FineStore on _FineStore, Store {
   }
 
   @override
-  void setTotalPrice({required double totalPrice}) {
+  void setTotalPrice({required int totalPrice}) {
     final _$actionInfo = _$_FineStoreActionController.startAction(
         name: '_FineStore.setTotalPrice');
     try {

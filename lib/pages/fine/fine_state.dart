@@ -24,7 +24,7 @@ abstract class _FineStore with Store {
   double? loc2lon;
 
   @observable
-  double? totalPrice;
+  int? totalPrice;
 
   @action
   void setShowSummary({required bool showSummary}) {
@@ -52,7 +52,7 @@ abstract class _FineStore with Store {
   }
 
   @action
-  void setTotalPrice({required double totalPrice}) {
+  void setTotalPrice({required int totalPrice}) {
     this.totalPrice = totalPrice;
   }
 }

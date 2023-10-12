@@ -25,10 +25,15 @@ class FineSummary extends HookWidget {
             Observer(
               builder: (context){
                 return Text(
-                  "Passenger total is ${store.totalPrice}"
+                  "Passenger total is LRK ${store.totalPrice}",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 42, 108, 44),
+                  ),
                 );
               },
-            )
+            ),
           ],
         ),
       ),

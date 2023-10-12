@@ -26,12 +26,17 @@ double calculateDistance(Location location1, Location location2) {
   double c = 2 * atan2(sqrt(a), sqrt(1 - a));
   double distance = earthRadius * c; // Distance in kilometers
 
+  print("DISTANCE >>>> $distance");
+
   return distance;
 }
 
-double priceCalculatorForDistance({required double distance}){
+int priceCalculatorForDistance({required double distance, bool isFineRequired = false}){
   double roundedDistance = distance.round().toDouble();
   double total = roundedDistance * PRICE_PER_METER;
-  return total;
+  if(isFineRequired == true){
+    total = total + FINE_CHARGE;
+  }
+  return total.toInt();
 }
 

@@ -22,8 +22,8 @@ class FineView extends HookWidget {
     double width = MediaQuery.of(context).size.width;
     // String startLocation = "";
     // String endLocation = "";
-    Location location1 = Location(latitude: 40.7128, longitude: -74.0060);; // New York City
-    Location location2 = Location(latitude: 40.7128, longitude: -74.0060);; 
+    Location location1 = Location(latitude: 5.947822, longitude: 80.5482919);; // New York City
+    Location location2 = Location(latitude: 6.9388614, longitude: 79.8542005);; 
 
     FineStore store = FineStore();
 
@@ -113,7 +113,7 @@ class FineView extends HookWidget {
                 btnWidth: width,
                 onPressed: (){
                   double distance = calculateDistance(location1, location2);
-                  double total = priceCalculatorForDistance(distance: distance);
+                  int total = priceCalculatorForDistance(distance: distance, isFineRequired: true);
                   store.setTotalPrice(totalPrice: total);
                   store.setShowSummary(showSummary: true);
                 },
