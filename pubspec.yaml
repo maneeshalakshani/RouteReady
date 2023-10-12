@@ -37,6 +37,7 @@ dependencies:
   flutter_hooks: 0.18.5+1
   qrscan: ^0.3.3   
   permission_handler: ^11.0.1
+  open_street_map_search_and_pick: ^0.1.0
   
 
 

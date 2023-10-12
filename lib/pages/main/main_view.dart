@@ -45,7 +45,8 @@ class MainView extends HookWidget {
                   checkCameraPermission().then((value) async{
                     String? cameraScanResult = await scanner.scan();
                     print("RESULT>>> $cameraScanResult");
-                    context.router.push(const ScannerDetailRoute());
+                    // context.router.push(const ScannerDetailRoute());
+                    context.router.push(const FineRoute());
                   });
                 },
               )
