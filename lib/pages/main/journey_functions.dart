@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/pages/fine/locationCalculator.dart';
@@ -91,6 +92,15 @@ import 'package:route_ready/routes/routes.gr.dart';
             await FirebaseFirestore.instance.collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME).doc().set(activeJourneyModel.toJson());
          }
       );
+      Fluttertoast.showToast(
+                    msg: "Journey Started",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: const Color.fromARGB(255, 25, 183, 10),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
     }catch(e){
       print(e.toString());
     }

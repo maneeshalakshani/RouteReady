@@ -37,6 +37,7 @@ class DetailContainerRow extends HookWidget {
           DetailContainer(
             text: text,
             textColor: textColor,
+            boldData: true,
           ),
         ],
       ),
