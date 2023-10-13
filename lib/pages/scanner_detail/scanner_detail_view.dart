@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:route_ready/components/appBarCustom.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/pages/main/journey_functions.dart';
@@ -29,10 +31,11 @@ class ScannerDetailView extends HookWidget {
     double width = MediaQuery.of(context).size.width;
     
     return Scaffold(
+      appBar: appBarCustom(),
       backgroundColor: APP_COLOR,
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.only(top: 100, left: 30, right: 30),
+          margin: const EdgeInsets.only(top: 50, left: 30, right: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,11 +57,11 @@ class ScannerDetailView extends HookWidget {
               ),
               DetailContainerRow(
                 label: "Start Destination",
-                text: "Lat: ${journeyDta.latitude}, Lon: ${journeyDta.longitude}",
+                text: "Lat: ${journeyDta.latitude}\nLon: ${journeyDta.longitude}",
               ),
               DetailContainerRow(
                 label: "End Destination",
-                text: "Lat: $eLatitude, Lon: $eLongitude",
+                text: "Lat: $eLatitude\nLon: $eLongitude",
               ),
               DetailContainerRow(
                 label: "Starts At",
@@ -66,11 +69,11 @@ class ScannerDetailView extends HookWidget {
               ),
               DetailContainerRow(
                 label: "Ends At",
-                text: "${DateTime.now()}",
+                text: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}\n${DateTime.now().hour} : ${DateTime.now().minute} ${DateTime.now().hour > 12 ? 'PM' : 'AM'}",
               ),
               DetailContainerRow(
                 label: "PRICE",
-                text: price.toString(),
+                text: "LRK ${price.toString()}.00",
                 textColor: Color.fromARGB(255, 182, 25, 14),
               ),
               RoundButton(
@@ -79,6 +82,15 @@ class ScannerDetailView extends HookWidget {
                 onPressed: (){
                   addSummaryJourneyData(userId: userId, latitude: eLatitude, longitude: eLongitude, price: price, activeJourney: journeyDta);
                   deleteActiveJourney(userId: userId);
+                  Fluttertoast.showToast(
+                    msg: "Journey Completed",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: const Color.fromARGB(255, 25, 183, 10),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   context.router.push(const MainRoute());
                 }
               ),

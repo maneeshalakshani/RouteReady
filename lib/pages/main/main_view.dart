@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:route_ready/components/appBarCustom.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/functions.dart';
@@ -18,11 +19,12 @@ class MainView extends HookWidget {
     double width = MediaQuery.of(context).size.width;
     
     return Scaffold(
+      appBar: appBarCustom(),
       backgroundColor: APP_COLOR,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          height: height,
+          height: height/10 * 9,
           width: width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

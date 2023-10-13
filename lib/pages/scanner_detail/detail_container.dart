@@ -5,10 +5,12 @@ class DetailContainer extends HookWidget {
   const DetailContainer({
     Key? key, 
     required this.text,
+    this.boldData = false,
     this.textColor,
   }) : super(key: key);
   final String text;
   final Color? textColor;
+  final bool boldData;
 
 
   @override
@@ -22,6 +24,7 @@ class DetailContainer extends HookWidget {
         style: TextStyle(
           fontSize: 18.0,
           color: textColor,
+          fontWeight: boldData ? FontWeight.bold : null,
         ),
       ),
     );

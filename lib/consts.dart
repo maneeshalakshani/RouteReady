@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color APP_COLOR = Color.fromARGB(255, 242, 214, 247);
+const String APP_NAME = "Route Ready";
+
+const Color APP_COLOR = Color.fromARGB(255, 250, 230, 253);
 const Color DARK_PURPLE = Color.fromARGB(255, 112, 41, 124);
 
 const double DEFAULT_TITLE_SIZE = 20.0;

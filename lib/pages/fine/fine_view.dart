@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:route_ready/components/appBarCustom.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/pages/fine/fine_state.dart';
@@ -28,6 +29,7 @@ class FineView extends HookWidget {
     FineStore store = FineStore();
 
     return Scaffold(
+      appBar: appBarCustom(),
       backgroundColor: APP_COLOR,
       body: SingleChildScrollView(
         child: Container(
