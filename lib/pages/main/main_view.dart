@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -6,6 +7,7 @@ import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/functions.dart';
 import 'package:route_ready/pages/main/journey_functions.dart';
+import 'package:route_ready/routes/routes.gr.dart';
 
 class MainView extends HookWidget {
   const MainView({
@@ -59,7 +61,14 @@ class MainView extends HookWidget {
                     // result ? context.router.push(const ScannerDetailRoute()) : context.popRoute();
                   });
                 },
-              )
+              ),
+              RoundButton(
+                text: "View All Active Journeys", 
+                btnWidth: width/2 * 1.5,
+                onPressed: ()async {
+                  context.router.push(const ActiveJourneysRoute());
+                },
+              ),
             ],
           ),
         ),
