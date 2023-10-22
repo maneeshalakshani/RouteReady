@@ -7,24 +7,52 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:route_ready/main.dart';
+import 'package:route_ready/controllers/journey_functions.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Invalid QR Validity', (WidgetTester tester) async {
+    // Build a widget and trigger a frame.
+    await tester.pumpWidget(MyWidget());
+    final BuildContext context = tester.element(find.text('YourWidgetText'));
+    const isEndOfJourney = false;
+    const qrData = 'sdkjUUYTKJUWde3';
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final result1 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result2 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result3 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(result1, false);
+    expect(result2, false);
+    expect(result3, false);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('Valid QR Validity', (WidgetTester tester) async {
+    // Build a widget and trigger a frame.
+    await tester.pumpWidget(MyWidget());
+    final BuildContext context = tester.element(find.text('YourWidgetText'));
+    const isEndOfJourney = false;
+    const qrData = 'ID: kdmfv234kG';
+
+    final result1 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result2 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result3 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+
+    expect(result1, true);
+    expect(result2, true);
+    expect(result3, true);
   });
 }
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Text('YourWidgetText'),
+        ),
+      ),
+    );
+  }
+}
+

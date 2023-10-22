@@ -6,7 +6,7 @@ import 'package:route_ready/components/appBarCustom.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/functions.dart';
-import 'package:route_ready/pages/main/journey_functions.dart';
+import 'package:route_ready/controllers/journey_functions.dart';
 import 'package:route_ready/routes/routes.gr.dart';
 
 class MainView extends HookWidget {

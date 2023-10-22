@@ -12,12 +12,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i9;
 import 'package:flutter/material.dart' as _i7;
 
+import '../models/ActiveJourney.dart' as _i8;
 import '../pages/activeJournies.dart/activeJournies_view.dart' as _i5;
 import '../pages/fine/fine_view.dart' as _i4;
 import '../pages/main/main_view.dart' as _i2;
-import '../pages/models/ActiveJourney.dart' as _i8;
 import '../pages/scanner_detail/scanner_detail_view.dart' as _i3;
 import '../pages/welcome/welcome_view.dart' as _i1;
 
@@ -46,6 +47,7 @@ class AppRouter extends _i6.RootStackRouter {
         child: _i3.ScannerDetailView(
           key: args.key,
           journeyDta: args.journeyDta,
+          documentSnapshot: args.documentSnapshot,
           eLatitude: args.eLatitude,
           eLongitude: args.eLongitude,
           price: args.price,
@@ -122,6 +124,7 @@ class ScannerDetailRoute extends _i6.PageRouteInfo<ScannerDetailRouteArgs> {
   ScannerDetailRoute({
     _i7.Key? key,
     required _i8.ActiveJourneyModel journeyDta,
+    required _i9.DocumentSnapshot<Object?> documentSnapshot,
     required num eLatitude,
     required num eLongitude,
     required num price,
@@ -132,6 +135,7 @@ class ScannerDetailRoute extends _i6.PageRouteInfo<ScannerDetailRouteArgs> {
           args: ScannerDetailRouteArgs(
             key: key,
             journeyDta: journeyDta,
+            documentSnapshot: documentSnapshot,
             eLatitude: eLatitude,
             eLongitude: eLongitude,
             price: price,
@@ -146,6 +150,7 @@ class ScannerDetailRouteArgs {
   const ScannerDetailRouteArgs({
     this.key,
     required this.journeyDta,
+    required this.documentSnapshot,
     required this.eLatitude,
     required this.eLongitude,
     required this.price,
@@ -155,6 +160,8 @@ class ScannerDetailRouteArgs {
   final _i7.Key? key;
 
   final _i8.ActiveJourneyModel journeyDta;
+
+  final _i9.DocumentSnapshot<Object?> documentSnapshot;
 
   final num eLatitude;
 
@@ -166,7 +173,7 @@ class ScannerDetailRouteArgs {
 
   @override
   String toString() {
-    return 'ScannerDetailRouteArgs{key: $key, journeyDta: $journeyDta, eLatitude: $eLatitude, eLongitude: $eLongitude, price: $price, userId: $userId}';
+    return 'ScannerDetailRouteArgs{key: $key, journeyDta: $journeyDta, documentSnapshot: $documentSnapshot, eLatitude: $eLatitude, eLongitude: $eLongitude, price: $price, userId: $userId}';
   }
 }
 

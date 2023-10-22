@@ -15,4 +15,3 @@ const int FINE_CHARGE = 50;
 const PRICE_PER_METER = 2;
 
 const String FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME = "ActiveJourney";
-const String FIRESTORE_SUMMARY_JOURNEY_COLLECTION_NAME = "JourneySummary";
