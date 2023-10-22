@@ -7,24 +7,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:route_ready/main.dart';
+import 'package:route_ready/controllers/journey_functions.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Invalid QR Validity', (WidgetTester tester) async {
+    // Build a widget and trigger a frame.
+    await tester.pumpWidget(MyWidget());
+    final BuildContext context = tester.element(find.text('YourWidgetText'));
+    const isEndOfJourney = false;
+    const qrData = 'sdkjUUYTKJUWde3';
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final result = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    expect(result, false);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Valid QR Validity', (WidgetTester tester) async {
+    // Build a widget and trigger a frame.
+    await tester.pumpWidget(MyWidget());
+    final BuildContext context = tester.element(find.text('YourWidgetText'));
+    const isEndOfJourney = false;
+    const qrData = 'ID: kdmfv234kG';
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    final result = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    expect(result, true);
   });
 }
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Text('YourWidgetText'),
+        ),
+      ),
+    );
+  }
+}
+

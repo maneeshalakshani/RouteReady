@@ -1,19 +1,18 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:route_ready/components/appBarCustom.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
-import 'package:route_ready/pages/main/journey_functions.dart';
-import 'package:route_ready/pages/models/ActiveJourney.dart';
+import 'package:route_ready/controllers/journey_functions.dart';
+import 'package:route_ready/models/ActiveJourney.dart';
 import 'package:route_ready/pages/scanner_detail/detail_row.dart';
-import 'package:route_ready/routes/routes.gr.dart';
 
 class ScannerDetailView extends HookWidget {
   const ScannerDetailView({
     Key? key, 
     required this.journeyDta,
+    required this.documentSnapshot,
     required this.eLatitude,
     required this.eLongitude,
     required this.price,
@@ -24,6 +23,7 @@ class ScannerDetailView extends HookWidget {
   final num eLongitude;
   final num price;
   final String userId;
+  final DocumentSnapshot documentSnapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -80,18 +80,9 @@ class ScannerDetailView extends HookWidget {
                 btnWidth: width,
                 text: "Complete Journey", 
                 onPressed: (){
-                  addSummaryJourneyData(userId: userId, latitude: eLatitude, longitude: eLongitude, price: price, activeJourney: journeyDta);
-                  deleteActiveJourney(userId: userId);
-                  Fluttertoast.showToast(
-                    msg: "Journey Completed",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: const Color.fromARGB(255, 25, 183, 10),
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                  context.router.push(const MainRoute());
+                  // addSummaryJourneyData(userId: userId, latitude: eLatitude, longitude: eLongitude, price: price, activeJourney: journeyDta);
+                  // deleteActiveJourney(userId: userId);
+                  completeJourney(activeJourneyModel: ActiveJourneyModel.fromSnapshot(documentSnapshot), context: context);
                 }
               ),
             ],

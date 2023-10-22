@@ -5,12 +5,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:route_ready/components/round_button.dart';
 import 'package:route_ready/consts.dart';
 import 'package:route_ready/pages/fine/locationCalculator.dart';
-import 'package:route_ready/pages/models/ActiveJourney.dart';
-import 'package:route_ready/pages/models/JourneySummary.dart';
+import 'package:route_ready/models/ActiveJourney.dart';
 import 'package:route_ready/routes/routes.gr.dart';
 
-  getAllRecipes() {
-    return FirebaseFirestore.instance.collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME).snapshots();
+  getCompletedJourneys() {
+    return FirebaseFirestore.instance
+        .collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME)
+        .where('journeyStatusCompleted', isEqualTo: true)
+        .snapshots();
   }
 
   Future<void> getJourneyByUserId({required String userId, required BuildContext context}) async {
@@ -18,6 +20,7 @@ import 'package:route_ready/routes/routes.gr.dart';
       QuerySnapshot usersQuery = await FirebaseFirestore.instance
           .collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME)
           .where('userId', isEqualTo: userId)
+          .where('journeyStatusCompleted', isEqualTo: false)
           .get();
 
       if (usersQuery.docs.isNotEmpty) {
@@ -28,6 +31,7 @@ import 'package:route_ready/routes/routes.gr.dart';
             longitude: userDoc.get('longitude'), 
             latitude: userDoc.get('latitude'), 
             startTime: userDoc.get('startTime').toDate() as DateTime,
+            journeyStatusCompleted: userDoc.get('journeyStatusCompleted')
           );
           double distance = calculateDistance(
             Location(
@@ -40,8 +44,8 @@ import 'package:route_ready/routes/routes.gr.dart';
             )
           );
           num price = priceCalculatorForDistance(distance: distance);
-          // addSummaryJourneyData(userId: userId, latitude: 4.6785, longitude: 80.2346, price: price, activeJourney: activeJourneyModel);
           context.router.push(ScannerDetailRoute(
+            documentSnapshot: usersQuery.docs.first,
             journeyDta: activeJourneyModel,
             eLatitude: 4.6785,
             eLongitude: 80.2346,
@@ -50,7 +54,7 @@ import 'package:route_ready/routes/routes.gr.dart';
           ));
         });
       } else {
-        print("No Active Journey with userId $userId found");
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context, 
           builder: (BuildContext context){
@@ -60,7 +64,7 @@ import 'package:route_ready/routes/routes.gr.dart';
                   color: Colors.red,
                 ),
               ),
-              content: Text(
+              content: const Text(
                 "First Start the journey or if the user haven't scanned the QR in onboard.manually calculate",
               ),
               actions: [
@@ -85,7 +89,13 @@ import 'package:route_ready/routes/routes.gr.dart';
 
 
   addActiveJourneyData({required String userId, required num latitude, required num longitude, required DateTime startTime}) async {
-    ActiveJourneyModel activeJourneyModel = ActiveJourneyModel(userId: userId, longitude: longitude, latitude: latitude, startTime: startTime);
+    ActiveJourneyModel activeJourneyModel = ActiveJourneyModel(
+      userId: userId, 
+      longitude: longitude, 
+      latitude: latitude, 
+      startTime: startTime,
+      journeyStatusCompleted: false,
+    );
     try{
       FirebaseFirestore.instance.runTransaction(
          (Transaction transaction) async {
@@ -106,59 +116,42 @@ import 'package:route_ready/routes/routes.gr.dart';
     }
   }
 
-  addSummaryJourneyData({required String userId, required num latitude, required num longitude, required num price, required ActiveJourneyModel activeJourney}) async {
-    // ActiveJourneyModel activeJourneyModel = ActiveJourneyModel(userId: activeJourney, longitude: longitude, latitude: latitude, startTime: startTime)
-    JourneySummaryModel journeySummaryModel = JourneySummaryModel(userId: userId, eLongitude: longitude, eLatitude: latitude, price: price, activeJourney: activeJourney, endTime: DateTime.now());
+  completeJourney({required ActiveJourneyModel activeJourneyModel, required BuildContext context}){
     try{
-      FirebaseFirestore.instance.runTransaction(
-         (Transaction transaction) async {
-            await FirebaseFirestore.instance.collection(FIRESTORE_SUMMARY_JOURNEY_COLLECTION_NAME).doc().set(journeySummaryModel.toJson());
-         }
-      );
+      FirebaseFirestore.instance.runTransaction((transaction) async {
+        await transaction.update(activeJourneyModel.documentReference, {'journeyStatusCompleted': true});
+      })
+      .then((value) {
+        Fluttertoast.showToast(
+                    msg: "Journey Completed",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: const Color.fromARGB(255, 25, 183, 10),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+        context.router.push(const MainRoute());
+      });
     }catch(e){
       print(e.toString());
     }
   }
 
-  // updateRecipe(Recipe recipe, String title, String description, String ingredients){
-  //   try{
-  //     FirebaseFirestore.instance.runTransaction((transaction) async {
-  //       await transaction.update(recipe.documentReference, {'title': title, 'description': description, 'ingredients': ingredients});
+  // deleteActiveJourney({required String userId}) async {
+  //   QuerySnapshot journeyQuery = await FirebaseFirestore.instance
+  //       .collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME)
+  //       .where('userId', isEqualTo: userId)
+  //       .get();
+  //   if (journeyQuery.docs.isNotEmpty) {
+  //     // Iterate through the results to delete matching documents
+  //     journeyQuery.docs.forEach((userDoc) {
+  //       userDoc.reference.delete();
   //     });
-  //   }catch(e){
-  //     print(e.toString());
-  //   }
+  //   } else {
+  //     print("No journey with userId $userId found to delete.");
+  //   }    
   // }
-
-  // updateIfEditing(){
-  //   if(isEditing){
-  //     updateRecipe(currentRecipe, titleController.text, descriptionController.text, ingredientsController.text);
-  //     setState(() {
-  //       isEditing = false;
-  //     });
-  //   }
-  // }
-
-  deleteActiveJourney({required String userId}) async {
-    // FirebaseFirestore.instance.runTransaction(
-    //   (Transaction transaction) async {
-    //     await transaction.delete(activeJourneyModel.documentReference);
-    //   }
-    // );
-
-    QuerySnapshot journeyQuery = await FirebaseFirestore.instance
-        .collection(FIRESTORE_ACTIVE_JOURNEY_COLLECTION_NAME)
-        .where('userId', isEqualTo: userId)
-        .get();
-    if (journeyQuery.docs.isNotEmpty) {
-      // Iterate through the results to delete matching documents
-      journeyQuery.docs.forEach((userDoc) {
-        userDoc.reference.delete();
-      });
-    } else {
-      print("No journey with userId $userId found to delete.");
-    }    
-  }
 
   bool qrValidity({required String qrData, required BuildContext context, bool isEndOfJourney = false}){
     List<String> qrDataList = qrData.split(": ");
