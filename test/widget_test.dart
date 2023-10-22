@@ -17,8 +17,13 @@ void main() {
     const isEndOfJourney = false;
     const qrData = 'sdkjUUYTKJUWde3';
 
-    final result = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
-    expect(result, false);
+    final result1 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result2 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result3 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+
+    expect(result1, false);
+    expect(result2, false);
+    expect(result3, false);
   });
 
   testWidgets('Valid QR Validity', (WidgetTester tester) async {
@@ -28,8 +33,13 @@ void main() {
     const isEndOfJourney = false;
     const qrData = 'ID: kdmfv234kG';
 
-    final result = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
-    expect(result, true);
+    final result1 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result2 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+    final result3 = qrValidity(qrData: qrData, context: context, isEndOfJourney: isEndOfJourney);
+
+    expect(result1, true);
+    expect(result2, true);
+    expect(result3, true);
   });
 }
 
